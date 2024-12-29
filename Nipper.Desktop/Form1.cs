@@ -44,7 +44,8 @@ namespace Nipper.Desktop
                         break;
                     case ExceptionResponse exceptionResponse:
                         nipResultDict[nipsArray[i]] =
-                            $"Wyst¹pi³ b³¹d o kodzie {exceptionResponse.Code}: {exceptionResponse.Message}";                     break;
+                            $"Wyst¹pi³ b³¹d o kodzie {exceptionResponse.Code}: {exceptionResponse.Message}";                     
+                        break;
                     default:
                         nipResultDict[nipsArray[i]] = "Niezidentyfikowana akcja";
                         break;

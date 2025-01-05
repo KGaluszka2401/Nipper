@@ -1,11 +1,12 @@
 using Nipper.DataManager.Clients;
 using Nipper.DataManager.Models;
+using Nipper.DataManager.Utilities;
 
 namespace Nipper.Desktop
 {
     public partial class NipperForm : Form
     {
-        private static readonly WlApiClient client = new WlApiClient();
+        private readonly NipValidator validator = new();
         public NipperForm()
         {
             InitializeComponent();
@@ -18,40 +19,41 @@ namespace Nipper.Desktop
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            // GUI init
             checkNipsButton.Enabled = false;
             nipCheckProgressBar.Visible = true;
             nipCheckProgressBar.Value = 0;
             outputBox.Text = "";
+
             Dictionary<string, string> nipResultDict = new();
             string[] nipsArray = userNips.Text.Split(["\n", "\r", " "], StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < nipsArray.Length; i++)
+            int processedNips = 0;
+            await foreach(var info in validator.CheckNipsAsync(nipsArray))
             {
-                if (i % 20 == 0 && i != 0)
-                    await Task.Delay(3000);
-                var response = await client.CheckNip(nipsArray[i]);
-                nipCheckProgressBar.Value = i * nipCheckProgressBar.Maximum / (nipsArray.Length - 1);
-
-                switch (response)
+                if (nipResultDict.ContainsKey(info.Nip))
                 {
-                    case EntityResponse entityResponse:
-                        if (entityResponse.Result.Subject == null)
-                        {
-                            nipResultDict[nipsArray[i]] = "Firma o podanym nipie nie istnieje";
-                            break;
-                        }
-                        nipResultDict[nipsArray[i]] = entityResponse.Result.Subject.Name;
-                        break;
-                    case ExceptionResponse exceptionResponse:
-                        nipResultDict[nipsArray[i]] =
-                            $"Wyst¹pi³ b³¹d o kodzie {exceptionResponse.Code}: {exceptionResponse.Message}";                     
-                        break;
-                    default:
-                        nipResultDict[nipsArray[i]] = "Niezidentyfikowana akcja";
-                        break;
+                    nipCheckProgressBar.Value = processedNips * nipCheckProgressBar.Maximum / (nipsArray.Length - 1);
+                    processedNips++;
+                    continue;
                 }
-                outputBox.Text += $"{nipsArray[i]} - {nipResultDict[nipsArray[i]]}\r\n";
+                else if (string.IsNullOrEmpty(info.ErrorMesage) && !string.IsNullOrEmpty(info.CompanyName))
+                {
+                    nipResultDict.Add(info.Nip, info.CompanyName);
+                }
+                else if (!string.IsNullOrEmpty(info.ErrorMesage) && string.IsNullOrEmpty(info.CompanyName))
+                {
+                    nipResultDict.Add(info.Nip, info.ErrorMesage);
+                }
+                else
+                {
+                    nipResultDict.Add(info.Nip, "Wyst¹pi³ niezidentyfikowany problem");
+                }
+                outputBox.Text += $"{info.Nip} - {nipResultDict[info.Nip]}\r\n";
+                if (nipsArray.Length > 1)
+                    nipCheckProgressBar.Value = processedNips * nipCheckProgressBar.Maximum / (nipsArray.Length - 1);
+                processedNips++;
             }
+            
 
             checkNipsButton.Enabled = true;
             nipCheckProgressBar.Visible = false;

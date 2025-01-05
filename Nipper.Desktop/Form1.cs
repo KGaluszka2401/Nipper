@@ -1,4 +1,4 @@
-using Nipper.DataManager.Clients;
+using Nipper.DataManager.ApiClients;
 using Nipper.DataManager.Models;
 using Nipper.DataManager.Utilities;
 

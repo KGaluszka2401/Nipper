@@ -1,4 +1,5 @@
-﻿using Nipper.DataManager.Clients;
+﻿using Nipper.DataManager.ApClients.WlApiClient;
+using Nipper.DataManager.ApClients.WlApiClient.Models;
 using Nipper.DataManager.Models;
 
 namespace Nipper.DataManager.Utilities;
@@ -40,7 +41,7 @@ public class NipValidator
                 await Task.Delay(3000);
             }
 
-            var response = await wlApiClient.CheckNip(nip);
+            var response = await wlApiClient.CheckNipAsync(nip);
             CompanyInfo companyInfo = new()
             {
                 Nip = nip,
@@ -49,7 +50,7 @@ public class NipValidator
             };
             switch (response)
             {
-                case EntityResponse entityResponse:
+                case WlEntityResponse entityResponse:
                     if (entityResponse.Result.Subject == null)
                     {
                         companyInfo.ErrorMesage = "Nie istnieje firma o podanym nipie";
@@ -57,7 +58,7 @@ public class NipValidator
                     }
                     companyInfo.CompanyName = entityResponse.Result.Subject.Name;
                     break;
-                case ExceptionResponse exceptionResponse:
+                case WlExceptionResponse exceptionResponse:
                     companyInfo.ErrorMesage =
                         $"Wystąpił błąd {exceptionResponse.Code}: {exceptionResponse.Message}";
                     break;

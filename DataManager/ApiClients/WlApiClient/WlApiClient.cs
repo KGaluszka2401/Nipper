@@ -1,14 +1,14 @@
 ﻿using System.Web;
-using Newtonsoft.Json;
-using Nipper.DataManager.Models;
+using System.Text.Json;
+using Nipper.DataManager.ApClients.WlApiClient.Models;
 
-namespace Nipper.DataManager.Clients;
+namespace Nipper.DataManager.ApClients.WlApiClient;
 
-public class WlApiClient
+internal class WlApiClient
 {
     private static readonly HttpClient client = new()
     {
-        BaseAddress = new Uri("https://wl-test.mf.gov.pl/api/search/nip/")
+        BaseAddress = new Uri("https://wl-api.mf.gov.pl/api/search/nip/")
     };
 
     public WlApiClient()
@@ -16,7 +16,7 @@ public class WlApiClient
         client.DefaultRequestHeaders.Clear();
         client.DefaultRequestHeaders.Add("Accept", "application/json");
     }
-    public async Task<IResponse?> CheckNip(string nip)
+    public async Task<IWlResponse?> CheckNipAsync(string nip)
     {
         var builder = new UriBuilder(client.BaseAddress!);
         var query = HttpUtility.ParseQueryString(builder.Query);
@@ -32,11 +32,11 @@ public class WlApiClient
 
         if (response.IsSuccessStatusCode)
         {
-            return JsonConvert.DeserializeObject<EntityResponse>(json);
+            return JsonSerializer.Deserialize<WlEntityResponse>(json);
         }
         else
         {
-            return JsonConvert.DeserializeObject<ExceptionResponse>(json);
+            return JsonSerializer.Deserialize<WlExceptionResponse>(json);
         }
     }
 }

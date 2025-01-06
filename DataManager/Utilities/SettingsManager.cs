@@ -5,20 +5,20 @@ namespace Nipper.DataManager.Utilities;
 
 public class SettingsManager
 {
-    private string cfgPath;
+    private readonly string cfgPath;
     public SettingsManager()
     {
         cfgPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "appsettings.json");
         cfgPath = Path.GetFullPath(cfgPath);
     }
 
-    public string? GetXlsPath()
+    public string? GetXlsSavePath()
     {
         var cfg = GetSetting();
         return cfg.XlsOutputFolder;
     }
 
-    public void SetXlsPath(string path)
+    public void SetXlsSavePath(string path)
     {
         var cfg = GetSetting();
         cfg.XlsOutputFolder = path;

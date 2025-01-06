@@ -2,6 +2,6 @@
 
 public class WlExceptionResponse : IWlResponse
 {
-    public string Message { get; set; }
-    public string Code { get; set; }
+    public string code { get; set; }
+    public string message { get; set; }
 }

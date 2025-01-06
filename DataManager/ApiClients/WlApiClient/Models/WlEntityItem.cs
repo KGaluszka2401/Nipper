@@ -2,5 +2,5 @@
 
 public class WlEntityItem
 {
-    public WlEntity? Subject { get; set; }
+    public WlEntity? subject { get; set; }
 }

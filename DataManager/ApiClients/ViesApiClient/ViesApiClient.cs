@@ -15,8 +15,8 @@ internal class ViesApiClient
     /// <param name="countryCode"></param>
     /// <param name="nip"></param>
     /// <returns>
-    /// <strong>ViesResponse</strong> object when vies service returns information about nip number or a 
-    /// <strong>null</strong> on a failed request.
+    /// <strong>ViesEntityResponse</strong> object when vies service returns information about nip number or a 
+    /// <strong>ViesExceptionResponse</strong> on a failed request.
     /// </returns>
     public async Task<IViesResponse> CheckNipAsync(string countryCode, string nip)
     {
@@ -32,14 +32,13 @@ internal class ViesApiClient
         }
 
         string responseBody = await response.Content.ReadAsStringAsync();
-
         var viesResponse = JsonSerializer.Deserialize<ViesEntityResponse>(responseBody);
 
         if (viesResponse == null)
         {
             return new ViesExceptionResponse()
             {
-                ErrorMesssage = $"Nie powiodła się serializacja odpowiedzi serwera"
+                ErrorMesssage = $"Nie powiodła się deserializacja odpowiedzi serwera"
             };
         }
 

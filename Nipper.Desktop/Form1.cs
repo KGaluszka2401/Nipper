@@ -59,6 +59,7 @@ namespace Nipper.Desktop
             checkNipsButton.Enabled = true;
             nipCheckProgressBar.Visible = false;
             MessageBox.Show("Sprawdzanie zakoñczone");
+            XlsCreator.CreateXlsxFile(nipResultDict);
         }
 
         private void wybierzFolderNaPlikiXlsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,7 +68,7 @@ namespace Nipper.Desktop
             {
                 folderDialog.Description = "Wybierz folder do zapisu plików xls z wynikami.";
                 folderDialog.ShowNewFolderButton = true;
-                string? currentPath = settingsManager.GetXlsPath();
+                string? currentPath = settingsManager.GetXlsSavePath();
                 if (!string.IsNullOrEmpty(currentPath))
                 {
                     folderDialog.InitialDirectory = currentPath;
@@ -75,7 +76,7 @@ namespace Nipper.Desktop
 
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
-                    settingsManager.SetXlsPath(folderDialog.SelectedPath);
+                    settingsManager.SetXlsSavePath(folderDialog.SelectedPath);
                 }
             }
         }

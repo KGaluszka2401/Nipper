@@ -1,14 +1,14 @@
 ﻿using System.Web;
 using System.Text.Json;
-using Nipper.DataManager.ApClients.WlApiClient.Models;
+using Nipper.DataManager.ApiClients.WlApiClient.Models;
 
-namespace Nipper.DataManager.ApClients.WlApiClient;
+namespace Nipper.DataManager.ApiClients.WlApiClient;
 
 internal class WlApiClient
 {
     private static readonly HttpClient client = new()
     {
-        BaseAddress = new Uri("https://wl-api.mf.gov.pl/api/search/nip/")
+        BaseAddress = new Uri("https://wl-test.mf.gov.pl/api/search/nip/")
     };
 
     public WlApiClient()
@@ -20,7 +20,6 @@ internal class WlApiClient
     {
         var builder = new UriBuilder(client.BaseAddress!);
         var query = HttpUtility.ParseQueryString(builder.Query);
-
         query["date"] = DateTime.Now.ToString("yyyy-MM-dd");
         builder.Query = query.ToString();
         builder.Path += "/" + nip;

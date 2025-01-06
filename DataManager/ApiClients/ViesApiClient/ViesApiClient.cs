@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using Nipper.DataManager.ApiClients.ViesApiClient.Models;
-using Nipper.DataManager.Models;
 
 namespace Nipper.DataManager.ApClients.ViesApiClient;
 

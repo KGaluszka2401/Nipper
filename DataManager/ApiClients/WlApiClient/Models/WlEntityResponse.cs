@@ -1,6 +1,6 @@
-﻿namespace Nipper.DataManager.ApClients.WlApiClient.Models;
+﻿namespace Nipper.DataManager.ApiClients.WlApiClient.Models;
 
-public class WlEntityResponse : IWlResponse
+internal class WlEntityResponse : IWlResponse
 {
     public WlEntityItem? result { get; set; }
 }

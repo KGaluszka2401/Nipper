@@ -1,6 +1,6 @@
-﻿namespace Nipper.DataManager.ApClients.WlApiClient.Models;
+﻿namespace Nipper.DataManager.ApiClients.WlApiClient.Models;
 
-public class WlExceptionResponse : IWlResponse
+internal class WlExceptionResponse : IWlResponse
 {
     public string? code { get; set; }
     public string? message { get; set; }

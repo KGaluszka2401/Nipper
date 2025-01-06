@@ -1,5 +1,5 @@
-﻿namespace Nipper.DataManager.ApClients.WlApiClient.Models;
+﻿namespace Nipper.DataManager.ApiClients.WlApiClient.Models;
 
-public interface IWlResponse
+internal interface IWlResponse
 {
 }

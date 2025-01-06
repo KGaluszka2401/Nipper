@@ -1,6 +1,6 @@
-﻿namespace Nipper.DataManager.ApClients.WlApiClient.Models;
+﻿namespace Nipper.DataManager.ApiClients.WlApiClient.Models;
 
-public class WlEntity
+internal class WlEntity
 {
     public string? name { get; set; }
 }

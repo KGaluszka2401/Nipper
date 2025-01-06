@@ -1,11 +1,13 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using Microsoft.Extensions.Configuration;
 using Nipper.DataManager.Models;
 
 namespace Nipper.DataManager.Utilities;
 
 public class SettingsManager
 {
-    private readonly string cfgPath;
+    private string cfgPath;
     public SettingsManager()
     {
         cfgPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "appsettings.json");
@@ -30,6 +32,10 @@ public class SettingsManager
     {
         string jsonString = File.ReadAllText(cfgPath);
         var cfg = JsonSerializer.Deserialize<Settings>(jsonString);
-        return cfg == null ? throw new Exception("Missing config file") : cfg;
+        if (cfg == null)
+        {
+            throw new Exception("Missing config file");
+        }
+        return cfg;
     }
 }

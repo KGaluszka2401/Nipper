@@ -34,6 +34,7 @@
             StripMenuOptions = new ToolStripMenuItem();
             outputBox = new TextBox();
             nipCheckProgressBar = new ProgressBar();
+            wybierzFolderNaPlikiXlsToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -68,6 +69,7 @@
             // 
             // StripMenuOptions
             // 
+            StripMenuOptions.DropDownItems.AddRange(new ToolStripItem[] { wybierzFolderNaPlikiXlsToolStripMenuItem });
             StripMenuOptions.Name = "StripMenuOptions";
             StripMenuOptions.Size = new Size(50, 20);
             StripMenuOptions.Text = "Opcje";
@@ -90,6 +92,13 @@
             nipCheckProgressBar.Size = new Size(394, 23);
             nipCheckProgressBar.TabIndex = 5;
             nipCheckProgressBar.Visible = false;
+            // 
+            // wybierzFolderNaPlikiXlsToolStripMenuItem
+            // 
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Name = "wybierzFolderNaPlikiXlsToolStripMenuItem";
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Size = new Size(208, 22);
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Text = "Wybierz folder na pliki xls";
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Click += wybierzFolderNaPlikiXlsToolStripMenuItem_Click;
             // 
             // NipperForm
             // 
@@ -119,5 +128,6 @@
         private ToolStripMenuItem StripMenuOptions;
         private TextBox outputBox;
         private ProgressBar nipCheckProgressBar;
+        private ToolStripMenuItem wybierzFolderNaPlikiXlsToolStripMenuItem;
     }
 }

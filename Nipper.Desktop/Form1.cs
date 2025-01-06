@@ -7,6 +7,7 @@ namespace Nipper.Desktop
     public partial class NipperForm : Form
     {
         private readonly NipValidator validator = new();
+        private readonly SettingsManager settingsManager = new();
         public NipperForm()
         {
             InitializeComponent();
@@ -25,10 +26,10 @@ namespace Nipper.Desktop
             nipCheckProgressBar.Value = 0;
             outputBox.Text = "";
 
-            Dictionary<string, string> nipResultDict = new();
+            Dictionary<string, string> nipResultDict = [];
             string[] nipsArray = userNips.Text.Split(["\n", "\r", " "], StringSplitOptions.RemoveEmptyEntries);
             int processedNips = 0;
-            await foreach(var info in validator.CheckNipsAsync(nipsArray))
+            await foreach (var info in validator.CheckNipsAsync(nipsArray))
             {
                 if (nipResultDict.ContainsKey(info.Nip))
                 {
@@ -53,11 +54,31 @@ namespace Nipper.Desktop
                     nipCheckProgressBar.Value = processedNips * nipCheckProgressBar.Maximum / (nipsArray.Length - 1);
                 processedNips++;
             }
-            
+
 
             checkNipsButton.Enabled = true;
             nipCheckProgressBar.Visible = false;
             MessageBox.Show("Sprawdzanie zakoñczone");
         }
+
+        private void wybierzFolderNaPlikiXlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new())
+            {
+                folderDialog.Description = "Wybierz folder do zapisu plików xls z wynikami.";
+                folderDialog.ShowNewFolderButton = true;
+                string? currentPath = settingsManager.GetXlsPath();
+                if (!string.IsNullOrEmpty(currentPath))
+                {
+                    folderDialog.InitialDirectory = currentPath;
+                }
+
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    settingsManager.SetXlsPath(folderDialog.SelectedPath);
+                }
+            }
+        }
+
     }
 }

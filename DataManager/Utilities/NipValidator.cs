@@ -1,7 +1,7 @@
 ﻿using Nipper.DataManager.ApClients.ViesApiClient;
-using Nipper.DataManager.ApClients.WlApiClient.Models;
 using Nipper.DataManager.ApiClients.ViesApiClient.Models;
 using Nipper.DataManager.ApiClients.WlApiClient;
+using Nipper.DataManager.ApiClients.WlApiClient.Models;
 using Nipper.DataManager.Models;
 
 namespace Nipper.DataManager.Utilities;
@@ -50,7 +50,7 @@ public class NipValidator
         }
     }
 
-    private static async Task<CompanyInfo> ValidateEuNipAsync(string nip, CompanyInfo companyInfo)
+    private async Task<CompanyInfo> ValidateEuNipAsync(string nip, CompanyInfo companyInfo)
     {
         var wlResponse = await wlApiClient.CheckNipAsync(nip);
         switch (wlResponse)
@@ -74,7 +74,7 @@ public class NipValidator
         return companyInfo;
     }
 
-    private static async Task<CompanyInfo> ValidateViesNipAsync(string nip, CompanyInfo companyInfo)
+    private async Task<CompanyInfo> ValidateViesNipAsync(string nip, CompanyInfo companyInfo)
     {
         var viesResponse = await viesApiClient.CheckNipAsync(nip[..2], nip);
         switch (viesResponse)

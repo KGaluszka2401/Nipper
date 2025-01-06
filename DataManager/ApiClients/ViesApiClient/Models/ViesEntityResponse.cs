@@ -3,5 +3,5 @@
 internal class ViesEntityResponse : IViesResponse
 {
     public bool isVald { get; set; }
-    public string name { get; set; }
+    public string? name { get; set; }
 }

@@ -2,5 +2,5 @@
 
 public class WlEntityResponse : IWlResponse
 {
-    public WlEntityItem result { get; set; }
+    public WlEntityItem? result { get; set; }
 }

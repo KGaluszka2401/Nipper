@@ -8,7 +8,7 @@ public class SettingsManager
     private readonly string cfgPath;
     public SettingsManager()
     {
-        cfgPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "appsettings.json");
+        cfgPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
         cfgPath = Path.GetFullPath(cfgPath);
     }
 

@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataManager\Nipper.DataManager.csproj" />
+    <ProjectReference Include="..\Nipper.DataManager\Nipper.DataManager.csproj" />
   </ItemGroup>
 
 </Project>

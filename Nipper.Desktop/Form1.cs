@@ -8,6 +8,7 @@ namespace Nipper.Desktop
     {
         private readonly NipValidator validator = new();
         private readonly SettingsManager settingsManager = new();
+        private Dictionary<string, string> nipResultDict = new();
         public NipperForm()
         {
             InitializeComponent();
@@ -15,18 +16,23 @@ namespace Nipper.Desktop
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            GenerateXlsxFile.Visible = false;
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(userNips.Text))
+            {
+                return;
+            }
             // GUI init
             checkNipsButton.Enabled = false;
+            GenerateXlsxFile.Visible = false;
             nipCheckProgressBar.Visible = true;
             nipCheckProgressBar.Value = 0;
             outputBox.Text = "";
 
-            Dictionary<string, string> nipResultDict = [];
+            nipResultDict.Clear();
             string[] nipsArray = userNips.Text.Split(["\n", "\r", " "], StringSplitOptions.RemoveEmptyEntries);
             int processedNips = 0;
             await foreach (var info in validator.CheckNipsAsync(nipsArray))
@@ -59,7 +65,7 @@ namespace Nipper.Desktop
             checkNipsButton.Enabled = true;
             nipCheckProgressBar.Visible = false;
             MessageBox.Show("Sprawdzanie zakoñczone");
-            XlsCreator.CreateXlsxFile(nipResultDict);
+            GenerateXlsxFile.Visible = true;
         }
 
         private void wybierzFolderNaPlikiXlsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,5 +87,17 @@ namespace Nipper.Desktop
             }
         }
 
+        private void GenerateXlsxFile_Click(object sender, EventArgs e)
+        {
+            string? path = settingsManager.GetXlsSavePath();
+            if (string.IsNullOrEmpty(path))
+            {
+                MessageBox.Show("Wybierz folder do zapisu wygenerowanych plików w ustawianiach");
+                return;
+            }
+            XlsCreator.CreateXlsxFile(nipResultDict, path);
+            MessageBox.Show("Wygenerowano plik");
+            GenerateXlsxFile.Visible = false;
+        }
     }
 }

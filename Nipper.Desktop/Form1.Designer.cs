@@ -32,9 +32,10 @@
             checkNipsButton = new Button();
             menuStrip1 = new MenuStrip();
             StripMenuOptions = new ToolStripMenuItem();
+            wybierzFolderNaPlikiXlsToolStripMenuItem = new ToolStripMenuItem();
             outputBox = new TextBox();
             nipCheckProgressBar = new ProgressBar();
-            wybierzFolderNaPlikiXlsToolStripMenuItem = new ToolStripMenuItem();
+            GenerateXlsxFile = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -74,6 +75,13 @@
             StripMenuOptions.Size = new Size(50, 20);
             StripMenuOptions.Text = "Opcje";
             // 
+            // wybierzFolderNaPlikiXlsToolStripMenuItem
+            // 
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Name = "wybierzFolderNaPlikiXlsToolStripMenuItem";
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Size = new Size(208, 22);
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Text = "Wybierz folder na pliki xls";
+            wybierzFolderNaPlikiXlsToolStripMenuItem.Click += wybierzFolderNaPlikiXlsToolStripMenuItem_Click;
+            // 
             // outputBox
             // 
             outputBox.Location = new Point(209, 38);
@@ -93,18 +101,22 @@
             nipCheckProgressBar.TabIndex = 5;
             nipCheckProgressBar.Visible = false;
             // 
-            // wybierzFolderNaPlikiXlsToolStripMenuItem
+            // GenerateXlsxFile
             // 
-            wybierzFolderNaPlikiXlsToolStripMenuItem.Name = "wybierzFolderNaPlikiXlsToolStripMenuItem";
-            wybierzFolderNaPlikiXlsToolStripMenuItem.Size = new Size(208, 22);
-            wybierzFolderNaPlikiXlsToolStripMenuItem.Text = "Wybierz folder na pliki xls";
-            wybierzFolderNaPlikiXlsToolStripMenuItem.Click += wybierzFolderNaPlikiXlsToolStripMenuItem_Click;
+            GenerateXlsxFile.Location = new Point(209, 119);
+            GenerateXlsxFile.Name = "GenerateXlsxFile";
+            GenerateXlsxFile.Size = new Size(95, 23);
+            GenerateXlsxFile.TabIndex = 6;
+            GenerateXlsxFile.Text = "Generuj plik ";
+            GenerateXlsxFile.UseVisualStyleBackColor = true;
+            GenerateXlsxFile.Click += GenerateXlsxFile_Click;
             // 
             // NipperForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(GenerateXlsxFile);
             Controls.Add(nipCheckProgressBar);
             Controls.Add(outputBox);
             Controls.Add(checkNipsButton);
@@ -129,5 +141,6 @@
         private TextBox outputBox;
         private ProgressBar nipCheckProgressBar;
         private ToolStripMenuItem wybierzFolderNaPlikiXlsToolStripMenuItem;
+        private Button GenerateXlsxFile;
     }
 }

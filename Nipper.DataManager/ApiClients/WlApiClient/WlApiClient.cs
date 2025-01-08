@@ -8,7 +8,7 @@ internal class WlApiClient
 {
     private static readonly HttpClient client = new()
     {
-        BaseAddress = new Uri("https://wl-test.mf.gov.pl/api/search/nip/")
+        BaseAddress = new Uri("https://wl-api.mf.gov.pl/api/search/nip/")
     };
 
     public WlApiClient()
